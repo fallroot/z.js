@@ -79,7 +79,7 @@ describe('Testing z.js', function() {
     });
     
     describe('Attribute selector', function() {
-        it('$z("input[name=\"hello\"][type=\'hidden\'][disable][value=test]") → <input name="hello" type="hidden" disable="disable" /> : get element with attribute when given attribute selector', function() {
+        it('$z("input[name=\"hello\"][type=\'hidden\'][disable][value=test]") → <input name="hello" type="hidden" disable="disable" value="test" /> : get element with attribute when given attribute selector', function() {
     		result = $z('input[name=hello][type=hidden][disable][value=test]');
             expect(result).to.be('input');
             expect(result).to.have.attr('name','hello');
