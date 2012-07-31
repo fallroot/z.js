@@ -53,10 +53,13 @@
         var element,
             id,
             classes = [],
+        	attributes = [], 
             text,
             reId = /#([\w-]+)/g,
             reClass = /\.([\w-]+)/g,
-            reText = /\{(.+)\}/g;
+            reText = /\{(.+)\}/g,
+            reAttributeNameAndValue = /\[\s*(\w+)\s*=\s*([^\].]*)\s*\]/, 
+    		reAttributeName = /\[\s*(\w+)\s*\]/;
 
         // remove leading or trailing spaces
         selector = selector.replace(/^\s+|\s+$/, '');
@@ -75,7 +78,24 @@
         if (reText.test(selector)) {
             text = RegExp.$1;
         }
+    	//get attribute name and value surrounded with []
+		while (reAttributeNameAndValue.test(selector)) {
+			attributes.push({
+				key : [ RegExp.$1 ],
+				value : RegExp.$2.replace(/"|'/, '')
+			});
+			
+			selector = selector.replace(reAttributeNameAndValue, '');
+		}
 
+		//get attribute just name surrounded with []
+		while (reAttributeName.test(selector)) {
+			attributes.push({
+				key : [ RegExp.$1 ],
+				value : [ RegExp.$1 ]
+			});
+			selector = selector.replace(reAttributeName, '');
+		}
         selector = selector.replace(reId, '')
                            .replace(reClass, '')
                            .replace(reText, '');
@@ -94,6 +114,10 @@
         if (classes.length) {
             element.className = classes.join(' ');
         }
+    
+        for ( var i = 0; i < attributes.length; i++) {
+			element.setAttribute(attributes[i].key, attributes[i].value);
+		}
 
         return element;
     }
