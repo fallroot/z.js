@@ -97,6 +97,18 @@ Output:
 <p>hello</p>
 ```
 
+### Attribute Selector
+
+``` javascript
+$z("input[name=\"hello\"][type='hidden'][disable][value=test]");
+```
+
+Output:
+
+``` html
+<input name="hello" type="hidden" disable="disable" value="test" />
+```
+
 ### All Together
 
 ``` javascript
