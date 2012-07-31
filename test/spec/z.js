@@ -77,6 +77,17 @@ describe('Testing z.js', function() {
             expect(result).to.have.text('hello');
         });
     });
+    
+    describe('Attribute selector', function() {
+        it('$z("input[name=\"hello\"][type=\'hidden\'][disable][value=test]") → <input name="hello" type="hidden" disable="disable" /> : get element with attribute when given attribute selector', function() {
+    		result = $z('input[name=hello][type=hidden][disable][value=test]');
+            expect(result).to.be('input');
+            expect(result).to.have.attr('name','hello');
+            expect(result).to.have.attr('type','hidden');
+            expect(result).to.have.attr('disable');
+            expect(result).to.have.attr('value','test');    		
+    	});
+    });
 
     describe('All Together', function() {
         it('$z("header>h1#title{hello}+p#message.error.critical{oops}") → <header><h1 id="title">hello</h1><p id="message" class="error critical">oops</p></header>', function() {
